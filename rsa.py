@@ -40,4 +40,5 @@ def generate_p_and_q(keysize):
     return (p, q)
 
 if __name__ == "__main__":
-    p, q = generate_p_and_q(16)    
+    # p, q = generate_p_and_q(16)
+    p, q = (52457, 39509)
