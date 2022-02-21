@@ -1,5 +1,11 @@
 import random
 
+''' write data to file '''
+def write_data(data, filename="myData.txt"):
+    with open(filename, "a") as f:
+        f.write(data+"\n")
+        print(data)
+
 ''' check prime number '''
 def isprime(num):
     if num == 2:
@@ -47,11 +53,11 @@ def mod_inverse(e, phi):
 def generate_keys(p, q):
     # Calculate N = p * q
     N = p*q
-    print("N ", N)
+    write_data('N = '+str(N))
 
     # Calculate Phi(N)
     phi = (p-1) * (q-1) 
-    print("phi ", phi)
+    write_data('phi_N = '+str(phi))
 
     # Choose an integer 'e' such that 'e' and phi(n) are coprime
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
@@ -61,10 +67,10 @@ def generate_keys(p, q):
     while g != 1:
         e = random.randrange(1, phi)
         g = gcd(e, phi)
-    print("e ", e)
+    write_data('e = '+str(e))
 
     d = mod_inverse(e, phi)
-    print("d ", d)
+    write_data('d = '+str(d))
 
     public_key = (e, N)
     private_key = (d, N)
@@ -74,8 +80,8 @@ def generate_keys(p, q):
 if __name__ == "__main__":
     # p, q = generate_p_and_q(16)
     p, q = (52457, 39509)
-    print("p: ", p)
-    print("q: ", q)
+    write_data('p = '+str(p))
+    write_data('q = '+str(q))
 
     public, private = generate_keys(p, q)
     print("Public Key: ", public)
