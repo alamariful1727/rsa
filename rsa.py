@@ -62,7 +62,7 @@ def generate_keys(p, q):
     # Choose an integer 'e' such that 'e' and phi(n) are coprime
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     # e -> gcd(e,z)==1      ; 1 < e < z
-    e = random.randrange(1, phi)
+    e = random.randrange(1, phi - 1)
     g = gcd(e, phi)
     while g != 1:
         e = random.randrange(1, phi)
@@ -78,8 +78,8 @@ def generate_keys(p, q):
     return (public_key, private_key)
 
 if __name__ == "__main__":
-    # p, q = generate_p_and_q(16)
-    p, q = (52457, 39509)
+    p, q = generate_p_and_q(16)
+    # p, q = (52457, 39509)
     write_data('p = '+str(p))
     write_data('q = '+str(q))
 
