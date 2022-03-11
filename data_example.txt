@@ -1,0 +1,43 @@
+# IDs
+MY_ID = 1234567
+PARTNER_ID = 89123456
+
+# my data
+p = 1234567
+q = 3456677
+N = 45454545454
+phi_N = 375656454
+e = 54545
+d = 645454
+
+# my partner data
+PARTNER_N = 5434343434 
+PARTNER_e = 343343
+
+# encryption
+MY_MESSAGE = "Hello World"
+MY_MESSAGE_chunks = ["Hel", "lo ", "Wor", "ld"]
+MY_CIPHERTEXT = [12345, 23456, 34567, 45678]
+
+# decryption
+PARTNER_CIPHERTEXT = [12345, 23456, 34567, 45678]
+PARTNER_MESSAGE_chunks_AFTER_DECRYPT = ["Goo", "d D", "ay"]
+PARTNER_MESSAGE_AFTER_DECRYPT = "Good Day"
+
+
+# sign
+MY_MESSAGE_TO_BE_SIGNED = "Muhammad ELSheikh"
+MY_MESSAGE_TO_BE_SIGNED_chunks = ["Muh", "amm", "ad ", "ELS", "hei", "kh"]
+MY_SIGNATURE = [1234, 23456, 34567, 45667, 7777, 4554]
+
+# verfiy the signature
+PARTNER_SIGNED_MESSAGE = "Mohamed Mahdy"
+PARTNER_SIGNATURE = [12345, 44444, 222222, 33333, 12222]
+#IS_VALID_SIGNATURE should be True or False
+IS_VALID_SIGNATURE = True
+
+
+
+COMMENTS = '''
+# If you have a short comment, write it here
+'''

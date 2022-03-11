@@ -1,0 +1,43 @@
+# IDs
+MY_ID = 
+PARTNER_ID = 
+
+# my data
+p = 
+q = 
+N = 
+phi_N = 
+e = 
+d = 
+
+# my partner data
+PARTNER_N = 
+PARTNER_e = 
+
+# encryption
+MY_MESSAGE = ""
+MY_MESSAGE_chunks = []
+MY_CIPHERTEXT = []
+
+# decryption
+PARTNER_CIPHERTEXT = []
+PARTNER_MESSAGE_chunks_AFTER_DECRYPT = []
+PARTNER_MESSAGE_AFTER_DECRYPT = ""
+
+
+# sign
+MY_MESSAGE_TO_BE_SIGNED = ""
+MY_MESSAGE_TO_BE_SIGNED_chunks = []
+MY_SIGNATURE = []
+
+# verfiy the signature
+PARTNER_SIGNED_MESSAGE = ""
+PARTNER_SIGNATURE = []
+#IS_VALID_SIGNATURE should be True or False
+IS_VALID_SIGNATURE = 
+
+
+
+COMMENTS = '''
+# If you have a short comment, write it here
+'''
