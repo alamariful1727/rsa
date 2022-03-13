@@ -99,6 +99,19 @@ def generate_keys(p, q):
 
     return (public_key, private_key)
 
+''' encrypt message '''
+def encryption(m, e, n):
+    print("MY_MESSAGE =", m)
+    
+    MY_MESSAGE_chunks = [m[i:i+3] for i in range(0, len(m), 3)]
+    print("MY_MESSAGE =", MY_MESSAGE_chunks)
+    
+    MY_MESSAGE_chunks_hex = [chunk.encode('utf-8').hex() for chunk in MY_MESSAGE_chunks]
+    print("MY_MESSAGE_chunks_hex =", MY_MESSAGE_chunks_hex)
+    
+    MY_MESSAGE_chunks_int = [int(chunk, 16) for chunk in MY_MESSAGE_chunks_hex]
+    print("MY_MESSAGE_chunks_int =", MY_MESSAGE_chunks_int)
+
 if __name__ == "__main__":
     # utility: reset text file
     # reset_file()
@@ -118,3 +131,5 @@ if __name__ == "__main__":
         public, private = generate_keys(p, q)
         print("Public Key: (e, N) =", public)
         print("Private Key: (d, N) =", private)
+
+    encryption("Hello World", data.get('PARTNER_e'), data.get('PARTNER_N'))
