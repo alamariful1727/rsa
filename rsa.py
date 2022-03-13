@@ -111,6 +111,11 @@ def encryption(m, e, n):
     
     MY_MESSAGE_chunks_int = [int(chunk, 16) for chunk in MY_MESSAGE_chunks_hex]
     print("MY_MESSAGE_chunks_int =", MY_MESSAGE_chunks_int)
+    
+    MY_CIPHERTEXT = [pow(chunk, e, n) for chunk in MY_MESSAGE_chunks_int]
+    print("MY_CIPHERTEXT =", MY_CIPHERTEXT)
+
+    return MY_CIPHERTEXT
 
 if __name__ == "__main__":
     # utility: reset text file
@@ -132,4 +137,4 @@ if __name__ == "__main__":
         print("Public Key: (e, N) =", public)
         print("Private Key: (d, N) =", private)
 
-    encryption("Hello World", data.get('PARTNER_e'), data.get('PARTNER_N'))
+    MY_CIPHERTEXT = encryption("Hello World", data.get('PARTNER_e'), data.get('PARTNER_N'))
