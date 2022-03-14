@@ -99,6 +99,31 @@ def generate_keys(p, q):
 
     return (public_key, private_key)
 
+''' power mod '''
+def power_mod(b, e, m):
+    str_bin = bin(e).replace("0b", "")
+    # print(str_bin)
+
+    list_bin = list(map(int, str_bin))
+    # print(list_bin)
+
+    reverse_list_bin = list_bin[::-1]
+    # print(reverse_list_bin)
+
+    list_with_square_value = [b % m]
+    for i in range(1, len(reverse_list_bin)):
+        list_with_square_value.append(pow(list_with_square_value[i-1], 2, m))
+    # print("list_with_square_value =", list_with_square_value)
+
+    product = 1
+    for i in range(len(reverse_list_bin)):
+        if (reverse_list_bin[i] == 1):
+            product = product * list_with_square_value[i]
+
+    r = product % m
+
+    return r
+
 ''' encrypt message '''
 def encryption(m, e, n):
     print("MY_MESSAGE =", m)
@@ -138,3 +163,8 @@ if __name__ == "__main__":
         print("Private Key: (d, N) =", private)
 
     MY_CIPHERTEXT = encryption("Hello World", data.get('PARTNER_e'), data.get('PARTNER_N'))
+
+    # print(pow(4744556, 133106707, 2141370397))
+    # print(power_mod(4744556, 133106707, 2141370397))
+    # print(pow(5140340, 65537, 14266103))
+    # print(power_mod(5140340, 65537, 14266103))
