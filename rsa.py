@@ -129,7 +129,7 @@ def encryption(m, e, n):
     print("MY_MESSAGE =", m)
     
     MY_MESSAGE_chunks = [m[i:i+3] for i in range(0, len(m), 3)]
-    print("MY_MESSAGE =", MY_MESSAGE_chunks)
+    print("MY_MESSAGE_chunks =", MY_MESSAGE_chunks)
     
     MY_MESSAGE_chunks_hex = [chunk.encode('utf-8').hex() for chunk in MY_MESSAGE_chunks]
     print("MY_MESSAGE_chunks_hex =", MY_MESSAGE_chunks_hex)
@@ -141,6 +141,23 @@ def encryption(m, e, n):
     print("MY_CIPHERTEXT =", MY_CIPHERTEXT)
 
     return MY_CIPHERTEXT
+
+''' decrypt message '''
+def decryption(MY_CIPHERTEXT, d, n):
+    
+    MY_MESSAGE_chunks_int = [pow(chunk, d, n) for chunk in MY_CIPHERTEXT]
+    print("MY_MESSAGE_chunks_int =", MY_MESSAGE_chunks_int)
+    
+    MY_MESSAGE_chunks_hex = [hex(chunk) for chunk in MY_MESSAGE_chunks_int]
+    print("MY_MESSAGE_chunks_hex =", MY_MESSAGE_chunks_hex)
+    
+    MY_MESSAGE_chunks = [bytes.fromhex(chunk[2:]).decode('utf-8') for chunk in MY_MESSAGE_chunks_hex]
+    print("MY_MESSAGE_chunks =", MY_MESSAGE_chunks)
+    
+    MY_MESSAGE = "".join(MY_MESSAGE_chunks)
+    print("MY_MESSAGE =", MY_MESSAGE)
+
+    return MY_MESSAGE
 
 if __name__ == "__main__":
     # utility: reset text file
@@ -162,7 +179,8 @@ if __name__ == "__main__":
         print("Public Key: (e, N) =", public)
         print("Private Key: (d, N) =", private)
 
-    MY_CIPHERTEXT = encryption("Hello World", data.get('PARTNER_e'), data.get('PARTNER_N'))
+    MY_CIPHERTEXT = encryption("Hello World", data.get('e'), data.get('N'))
+    MY_TEXT = decryption(MY_CIPHERTEXT, data.get('d'), data.get('N'))
 
     # print(pow(4744556, 133106707, 2141370397))
     # print(power_mod(4744556, 133106707, 2141370397))
