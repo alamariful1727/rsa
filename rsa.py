@@ -179,8 +179,8 @@ if __name__ == "__main__":
         print("Public Key: (e, N) =", public)
         print("Private Key: (d, N) =", private)
 
-    MY_CIPHERTEXT = encryption("Hello World", data.get('e'), data.get('N'))
-    MY_TEXT = decryption(MY_CIPHERTEXT, data.get('d'), data.get('N'))
+    MY_CIPHERTEXT = encryption("Bonjour, Amir",data.get('PARTNER_e'), data.get('PARTNER_N'))
+    # MY_TEXT = decryption(MY_CIPHERTEXT, data.get('d'), data.get('N'))
 
     # print(pow(4744556, 133106707, 2141370397))
     # print(power_mod(4744556, 133106707, 2141370397))
