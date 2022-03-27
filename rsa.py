@@ -8,7 +8,10 @@ data = {
     "e": 596208931,
     "d": 526837387,
     "PARTNER_N": 2141370397,
-    "PARTNER_e": 133106707
+    "PARTNER_e": 133106707,
+    "PARTNER_MESSAGE": [230459415, 273247991, 773614679, 996343186, 1043904371, 1010832043],
+    "PARTNER_SIGNATURE": [1315603004, 307792732, 1258840492, 1574387229],
+    "PARTNER_SIGNED_MESSAGE": "Amir Souri"
 }
 
 ''' reset file '''
@@ -126,6 +129,7 @@ def power_mod(b, e, m):
 
 ''' encrypt message '''
 def encryption(m, e, n):
+    print("\n# encryption")
     print("MY_MESSAGE =", m)
     
     MY_MESSAGE_chunks = [m[i:i+3] for i in range(0, len(m), 3)]
@@ -143,27 +147,69 @@ def encryption(m, e, n):
     return MY_CIPHERTEXT
 
 ''' decrypt message '''
-def decryption(MY_CIPHERTEXT, d, n):
-    
-    MY_MESSAGE_chunks_int = [pow(chunk, d, n) for chunk in MY_CIPHERTEXT]
-    print("MY_MESSAGE_chunks_int =", MY_MESSAGE_chunks_int)
-    
-    MY_MESSAGE_chunks_hex = [hex(chunk) for chunk in MY_MESSAGE_chunks_int]
-    print("MY_MESSAGE_chunks_hex =", MY_MESSAGE_chunks_hex)
-    
-    MY_MESSAGE_chunks = [bytes.fromhex(chunk[2:]).decode('utf-8') for chunk in MY_MESSAGE_chunks_hex]
-    print("MY_MESSAGE_chunks =", MY_MESSAGE_chunks)
-    
-    MY_MESSAGE = "".join(MY_MESSAGE_chunks)
-    print("MY_MESSAGE =", MY_MESSAGE)
+def decryption(PARTNER_CIPHERTEXT, d, n):
+    print("\n# decryption")
+    print("PARTNER_CIPHERTEXT =", PARTNER_CIPHERTEXT)
 
-    return MY_MESSAGE
+    PARTNER_MESSAGE_chunks_int = [pow(chunk, d, n) for chunk in PARTNER_CIPHERTEXT]
+    print("PARTNER_MESSAGE_chunks_int =", PARTNER_MESSAGE_chunks_int)
+    
+    PARTNER_MESSAGE_chunks_hex = [hex(chunk) for chunk in PARTNER_MESSAGE_chunks_int]
+    print("PARTNER_MESSAGE_chunks_hex =", PARTNER_MESSAGE_chunks_hex)
+    
+    PARTNER_MESSAGE_chunks = [bytes.fromhex(chunk[2:]).decode('utf-8') for chunk in PARTNER_MESSAGE_chunks_hex]
+    print("PARTNER_MESSAGE_chunks =", PARTNER_MESSAGE_chunks)
+    
+    PARTNER_MESSAGE = "".join(PARTNER_MESSAGE_chunks)
+    print("PARTNER_MESSAGE =", PARTNER_MESSAGE)
+
+    return PARTNER_MESSAGE
+
+''' sign message '''
+def sign(m, d, n):
+    print("\n# sign")
+    print("MY_MESSAGE_TO_BE_SIGNED =", m)
+    
+    MY_MESSAGE_TO_BE_SIGNED_chunks = [m[i:i+3] for i in range(0, len(m), 3)]
+    print("MY_MESSAGE_TO_BE_SIGNED_chunks =", MY_MESSAGE_TO_BE_SIGNED_chunks)
+    
+    MY_MESSAGE_TO_BE_SIGNED_chunks_hex = [chunk.encode('utf-8').hex() for chunk in MY_MESSAGE_TO_BE_SIGNED_chunks]
+    print("MY_MESSAGE_TO_BE_SIGNED_chunks_hex =", MY_MESSAGE_TO_BE_SIGNED_chunks_hex)
+    
+    MY_MESSAGE_TO_BE_SIGNED_chunks_int = [int(chunk, 16) for chunk in MY_MESSAGE_TO_BE_SIGNED_chunks_hex]
+    print("MY_MESSAGE_TO_BE_SIGNED_chunks_int =", MY_MESSAGE_TO_BE_SIGNED_chunks_int)
+    
+    MY_SIGNATURE = [pow(chunk, d, n) for chunk in MY_MESSAGE_TO_BE_SIGNED_chunks_int]
+    print("MY_SIGNATURE =", MY_SIGNATURE)
+
+    return MY_SIGNATURE
+
+''' verify message '''
+def verify(PARTNER_SIGNATURE, PARTNER_SIGNED_MESSAGE, d, n):
+    print("\n# verify the signature")
+    print("PARTNER_SIGNED_MESSAGE =", PARTNER_SIGNED_MESSAGE)
+
+    print("PARTNER_SIGNATURE =", PARTNER_SIGNATURE)
+    PARTNER_SIGNATURE_chunks_int = [pow(chunk, d, n) for chunk in PARTNER_SIGNATURE]
+    print("PARTNER_SIGNATURE_chunks_int =", PARTNER_SIGNATURE_chunks_int)
+    
+    PARTNER_SIGNATURE_chunks_hex = [hex(chunk) for chunk in PARTNER_SIGNATURE_chunks_int]
+    print("PARTNER_SIGNATURE_chunks_hex =", PARTNER_SIGNATURE_chunks_hex)
+    
+    PARTNER_SIGNATURE_chunks = [bytes.fromhex(chunk[2:]).decode('utf-8') for chunk in PARTNER_SIGNATURE_chunks_hex]
+    print("PARTNER_SIGNATURE_chunks =", PARTNER_SIGNATURE_chunks)
+    
+    PARTNER_VERIFIED_MESSAGE = "".join(PARTNER_SIGNATURE_chunks)
+    print("PARTNER_VERIFIED_MESSAGE =", PARTNER_VERIFIED_MESSAGE)
+
+    return PARTNER_VERIFIED_MESSAGE == PARTNER_SIGNED_MESSAGE
 
 if __name__ == "__main__":
     # utility: reset text file
     # reset_file()
 
     if(data.get('p') and data.get('q') and data.get('N') and data.get('phi_N') and data.get('e') and data.get('d')):
+        print("\n# my data")
         print("p =",data.get('p'))
         print("q =",data.get('q'))
         print("N =",data.get('N'))
@@ -180,9 +226,8 @@ if __name__ == "__main__":
         print("Private Key: (d, N) =", private)
 
     MY_CIPHERTEXT = encryption("Bonjour, Amir",data.get('PARTNER_e'), data.get('PARTNER_N'))
-    # MY_TEXT = decryption(MY_CIPHERTEXT, data.get('d'), data.get('N'))
+    PARTNER_MESSAGE_AFTER_DECRYPT = decryption(data.get('PARTNER_MESSAGE'), data.get('d'), data.get('N'))
 
-    # print(pow(4744556, 133106707, 2141370397))
-    # print(power_mod(4744556, 133106707, 2141370397))
-    # print(pow(5140340, 65537, 14266103))
-    # print(power_mod(5140340, 65537, 14266103))
+    MY_SIGNATURE = sign("Faiza Tahsin", data.get('d'), data.get('N'))
+    IS_VALID_SIGNATURE = verify(data.get('PARTNER_SIGNATURE'), data.get('PARTNER_SIGNED_MESSAGE'), data.get('PARTNER_e'), data.get('PARTNER_N'))
+    print("IS_VALID_SIGNATURE", IS_VALID_SIGNATURE)
